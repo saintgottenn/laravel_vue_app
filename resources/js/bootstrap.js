@@ -4,10 +4,16 @@
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-import axios from 'axios';
+import axios from "axios";
 window.axios = axios;
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+const token = localStorage.getItem("appdata");
+if (token) {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${
+    JSON.parse(token)["authToken"]
+  }`;
+}
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

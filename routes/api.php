@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AuthController;
 
 /*
@@ -24,5 +25,6 @@ Route::middleware('guest:sanctum')->group(function() {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    
+
+    Route::apiResource('articles', ArticleController::class);
 });

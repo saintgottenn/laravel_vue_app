@@ -1,7 +1,9 @@
 <template lang="">
-    <div>Admin panel</div>
+  <div>Dashboard panel</div>
 </template>
 <script>
-export default {};
+export default {
+  name: "Dashboard",
+};
 </script>
 <style lang=""></style>

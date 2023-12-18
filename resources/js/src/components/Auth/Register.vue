@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import FormTemplate from "../common/FormTemplate.vue";
+import FormTemplate from "../../common/FormTemplate.vue";
 import { mapActions } from "vuex";
 
 export default {
