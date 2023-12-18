@@ -25,7 +25,10 @@
             alt="Изображение статьи"
             class="w-full h-40 object-cover mb-4"
           />
-          <h2 class="text-xl font-semibold">{{ article.title }}</h2>
+          <h2 class="text-2xl font-semibold">{{ article.title }}</h2>
+          <div class="text-sm text-gray-700 font-semibold">
+            {{ article.short_description }}
+          </div>
           <button
             @click="editArticle(article.id)"
             class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -41,6 +44,7 @@
 <script>
 export default {
   name: "Articles",
+
   data() {
     return {
       articles: [],
@@ -50,8 +54,11 @@ export default {
     this.getArticles();
   },
   methods: {
-    editArticle(id) {
-      this.$router.push({ name: "admin.article.edit", params: { id } });
+    editArticle(articleId) {
+      this.$router.push({
+        name: "admin.articles.edit",
+        params: { articleId },
+      });
     },
     getArticles() {
       axios

@@ -6,6 +6,7 @@ import FrontLayout from "../src/components/frontCommon/FrontLayout.vue";
 
 import AdminArticles from "../src/admin/Articles/Articles.vue";
 import AdminArticleCreate from "../src/admin/Articles/ArticleCreate.vue";
+import AdminArticleEdit from "../src/admin/Articles/ArticleEdit.vue";
 import AdminDashboard from "../src/admin/Dashboard.vue";
 import AdminLayout from "../src/admin/adminCommon/AdminLayout.vue";
 
@@ -55,6 +56,12 @@ const routes = [
             path: "create",
             component: AdminArticleCreate,
             name: "admin.articles.create",
+          },
+          {
+            path: ":articleId/edit",
+            component: AdminArticleEdit,
+            name: "admin.articles.edit",
+            props: true,
           },
         ],
       },

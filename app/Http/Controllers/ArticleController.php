@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ArticleRequest;
+use App\Http\Resources\ArticleResource;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -13,7 +16,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::all();
+        $articles = ArticleResource::collection(Article::orderBy('created_at', 'desc')->get());
 
         return response()->json($articles);
     }
@@ -35,14 +38,18 @@ class ArticleController extends Controller
             'title' => 'required|string|max:255',
             'image' => 'required|image',
             'content' => 'required|string',
+            'short_description' => 'required|string',
         ]);
+        
+        $imagePath = $request->file('image')->store('public/articles');
 
-        $validatedData = Auth::id();
+        $validatedData['user_id'] = Auth::id();
+        $validatedData['image'] = Storage::url($imagePath);
 
         Article::create($validatedData);
 
         return response()->json([
-            'message' => 'Article successfully created'
+            'message' => 'Article successfully created',
         ]); 
     }
 
@@ -51,7 +58,9 @@ class ArticleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $article = Article::find($id);
+
+        return response()->json($article);
     }
 
     /**
@@ -66,8 +75,28 @@ class ArticleController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        //
+    { 
+        $article = Article::find($id);
+
+        $validations = [
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'short_description' => 'required|string',
+        ];
+
+        if($article->image !== $request->image) {
+            $validations['image'] = 'required|image';
+        }
+
+        $validatedData = $request->validate($validations);
+
+        $validatedData['user_id'] = Auth::id();
+
+        $article->update($validatedData);
+
+        return response()->json([
+            'message' => 'Article successfully updated',
+        ]);
     }
 
     /**

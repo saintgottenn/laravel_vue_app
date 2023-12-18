@@ -1,6 +1,6 @@
 <template>
-  <div class="max-w-6xl max-h-full h-full py-16 mx-auto">
-    <h1 class="text-4xl mb-4">Создать статью</h1>
+  <div class="max-w-6xl py-16 max-h-full h-full pt-16 mx-auto">
+    <h1 class="text-4xl mb-4">Редактирование статьи</h1>
     <form @submit.prevent="submitArticle">
       <div class="mb-4">
         <label for="title" class="block text-gray-700 font-bold mb-2"
@@ -81,7 +81,8 @@ import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 export default {
-  name: "ArticleCreate",
+  name: "ArticleEdit",
+  props: ["articleId"],
   components: {
     QuillEditor,
   },
@@ -95,18 +96,35 @@ export default {
       previewImage: null,
     };
   },
+  mounted() {
+    this.getArticle(this.articleId);
+  },
   methods: {
+    async getArticle(articleId) {
+      axios
+        .get(`/api/articles/${articleId}`)
+        .then((resp) => {
+          this.title = resp.data.title;
+          this.previewImage = resp.data.image;
+          this.image = resp.data.image;
+          this.shortDescription = resp.data.short_description;
+          this.content = resp.data.content;
+        })
+        .catch((error) => console.error(error));
+    },
+
     async submitArticle() {
       this.errors = null;
 
       const formData = new FormData();
+      formData.append("_method", "PUT");
       formData.append("title", this.title);
       formData.append("image", this.image);
-      formData.append("short_description", this.shortDescription);
       formData.append("content", this.content);
+      formData.append("short_description", this.shortDescription);
 
       axios
-        .post("/api/articles", formData, {
+        .post(`/api/articles/${this.articleId}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
