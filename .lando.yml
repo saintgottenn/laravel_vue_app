@@ -1,0 +1,41 @@
+name: my-laravel-project
+recipe: laravel
+config:
+  webroot: public
+  via: nginx
+  php: "8.1"
+
+services:
+  appserver:
+    type: php:8.1
+    via: nginx
+    build_as_root:
+      - docker-php-ext-install pdo pdo_mysql
+    build:
+      - composer install
+    run:
+      - npm install
+      - npm run dev
+
+  database:
+    type: mysql
+    portforward: true
+    creds:
+      user: laravel
+      password: laravel
+      database: laravel
+
+  phpmyadmin:
+    type: phpmyadmin
+    hosts:
+      - database
+
+tooling:
+  artisan:
+    service: appserver
+  npm:
+    service: appserver
+  vue-cli:
+    service: appserver
+  phpmyadmin:
+    service: phpmyadmin
