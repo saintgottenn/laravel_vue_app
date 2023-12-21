@@ -87,8 +87,14 @@ class ArticleController extends Controller
         if($article->image !== $request->image) {
             $validations['image'] = 'required|image';
         }
-
+        
         $validatedData = $request->validate($validations);
+
+        if($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('public/articles');
+            
+            $validatedData['image'] = Storage::url($imagePath);
+        }
 
         $validatedData['user_id'] = Auth::id();
 
@@ -104,6 +110,6 @@ class ArticleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Article::destroy($id);
     }
 }

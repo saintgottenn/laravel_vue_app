@@ -29,12 +29,20 @@
           <div class="text-sm text-gray-700 font-semibold">
             {{ article.short_description }}
           </div>
-          <button
-            @click="editArticle(article.id)"
-            class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Редактировать
-          </button>
+          <div class="flex justify-between">
+            <button
+              @click="editArticle(article.id)"
+              class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
+              Редактировать
+            </button>
+            <button
+              @click="deleteArticle(article.id)"
+              class="mt-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            >
+              Удалить
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -59,6 +67,16 @@ export default {
         name: "admin.articles.edit",
         params: { articleId },
       });
+    },
+    deleteArticle(articleId) {
+      axios
+        .delete(`/api/articles/${articleId}`)
+        .then(() => {
+          this.articles = this.articles.filter(
+            (article) => article.id != articleId
+          );
+        })
+        .catch((error) => console.error(error));
     },
     getArticles() {
       axios
