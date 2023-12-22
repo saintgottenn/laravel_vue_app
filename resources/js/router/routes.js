@@ -19,7 +19,18 @@ const routes = [
     meta: { currentRoutes: "front" },
     children: [
       { path: "", component: Home, name: "home" },
-      { path: "/article", component: Article, name: "article" },
+      {
+        path: "/articles",
+        name: "articles",
+        children: [
+          {
+            path: ":articleId/show",
+            name: "articles.show",
+            component: Article,
+            props: true,
+          },
+        ],
+      },
       {
         path: "login",
         component: Login,

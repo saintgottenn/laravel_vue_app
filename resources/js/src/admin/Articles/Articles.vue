@@ -36,6 +36,12 @@
             >
               Редактировать
             </button>
+            <router-link
+              :to="{ name: 'articles.show', params: { articleId: article.id } }"
+              class="mt-2 flex items-center text-white underline text-blue-500"
+            >
+              Перейти
+            </router-link>
             <button
               @click="deleteArticle(article.id)"
               class="mt-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"

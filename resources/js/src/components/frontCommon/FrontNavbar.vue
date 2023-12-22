@@ -6,11 +6,6 @@
       >
     </li>
     <li class="mr-6">
-      <router-link to="/article" class="text-white hover:text-gray-300"
-        >Статья</router-link
-      >
-    </li>
-    <li class="mr-6">
       <router-link
         :to="{ name: 'admin.dashboard' }"
         class="text-white hover:text-gray-300"
@@ -28,12 +23,16 @@
     </li>
 
     <li class="mr-6" v-if="!user">
-      <router-link to="/login" class="text-white hover:text-gray-300"
+      <router-link
+        :to="{ name: '/login' }"
+        class="text-white hover:text-gray-300"
         >Вход</router-link
       >
     </li>
     <li class="mr-6" v-if="!user">
-      <router-link to="/register" class="text-white hover:text-gray-300"
+      <router-link
+        :to="{ name: '/register' }"
+        class="text-white hover:text-gray-300"
         >Регистрация</router-link
       >
     </li>
