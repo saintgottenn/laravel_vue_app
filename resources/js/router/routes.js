@@ -11,6 +11,7 @@ import AdminDashboard from "../src/admin/Dashboard.vue";
 import AdminLayout from "../src/admin/adminCommon/AdminLayout.vue";
 
 import { guestGuard } from "./guestGuard";
+import { adminGuard } from "./adminGuard";
 
 const routes = [
   {
@@ -49,6 +50,7 @@ const routes = [
     path: "/admin",
     component: AdminLayout,
     meta: { currentRoutes: "admin" },
+    beforeEnter: adminGuard,
     children: [
       {
         path: "",

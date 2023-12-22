@@ -50,6 +50,8 @@ class AuthController extends Controller
 
         Auth::login($user);
 
+        $user->assignRole('admin');
+
         $token = $user->createToken('authToken')->plainTextToken;
 
         return response()->json([

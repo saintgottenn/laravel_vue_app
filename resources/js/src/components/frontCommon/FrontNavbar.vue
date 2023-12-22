@@ -5,7 +5,7 @@
         >Главная</router-link
       >
     </li>
-    <li class="mr-6">
+    <li class="mr-6" v-if="isAdmin">
       <router-link
         :to="{ name: 'admin.dashboard' }"
         class="text-white hover:text-gray-300"
@@ -24,14 +24,14 @@
 
     <li class="mr-6" v-if="!user">
       <router-link
-        :to="{ name: '/login' }"
+        :to="{ name: 'login' }"
         class="text-white hover:text-gray-300"
         >Вход</router-link
       >
     </li>
     <li class="mr-6" v-if="!user">
       <router-link
-        :to="{ name: '/register' }"
+        :to="{ name: 'register' }"
         class="text-white hover:text-gray-300"
         >Регистрация</router-link
       >
@@ -45,9 +45,24 @@ export default {
   components: {
     Navbar,
   },
+  data() {
+    return {
+      isAdmin: false,
+    };
+  },
+  mounted() {
+    this.checkUserRole();
+  },
   methods: {
     logout() {
       this.$store.dispatch("logout", { router: this.$router });
+    },
+
+    async checkUserRole() {
+      axios
+        .get("/api/user-roles")
+        .then((resp) => (this.admin = resp.data.includes("admin")))
+        .catch((error) => console.error(error));
     },
   },
   computed: {
