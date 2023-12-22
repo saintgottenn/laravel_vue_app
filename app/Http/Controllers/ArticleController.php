@@ -102,7 +102,7 @@ class ArticleController extends Controller
             'short_description' => 'required|string',
         ];
 
-        if($article->image !== $request->image) {
+        if(asset($article->image) !== $request->image) {
             $validations['image'] = 'required|image';
         }
         
