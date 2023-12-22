@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\CommentResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ArticleResource extends JsonResource
@@ -22,6 +23,7 @@ class ArticleResource extends JsonResource
             'image' => asset($this->image),
             'created_at' => $this->created_at->format('d.m.Y'),
             'updated_at' => $this->updated_at->format('d.m.Y'),
+            'comments' => CommentResource::collection($this->whenLoaded('comments')),
         ];
     }
 }

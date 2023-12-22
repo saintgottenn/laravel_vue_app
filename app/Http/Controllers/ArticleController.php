@@ -58,9 +58,17 @@ class ArticleController extends Controller
      */
     public function show(string $id)
     {
-        $article = new ArticleResource(Article::find($id));
+        $article = new ArticleResource(Article::with(['comments' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }, 'comments.user'])->find($id));
+        
+        $additional = [
+            'commentable_type' => (new Article())->getMorphClass(),
+        ];
 
-        return response()->json($article);
+        $data = collect($additional)->merge($article);
+
+        return response()->json($data);
     }
 
     /**

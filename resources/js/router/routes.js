@@ -12,6 +12,7 @@ import AdminLayout from "../src/admin/adminCommon/AdminLayout.vue";
 
 import { guestGuard } from "./guestGuard";
 import { adminGuard } from "./adminGuard";
+import { authGuard } from "./authGuard";
 
 const routes = [
   {

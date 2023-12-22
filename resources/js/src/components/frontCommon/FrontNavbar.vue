@@ -59,10 +59,12 @@ export default {
     },
 
     async checkUserRole() {
-      axios
-        .get("/api/user-roles")
-        .then((resp) => (this.isAdmin = resp.data.includes("admin")))
-        .catch((error) => console.error(error));
+      if (this.$store.user) {
+        axios
+          .get("/api/user-roles")
+          .then((resp) => (this.isAdmin = resp.data.includes("admin")))
+          .catch((error) => console.error(error));
+      }
     },
   },
   computed: {
