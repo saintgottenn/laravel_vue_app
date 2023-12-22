@@ -16,9 +16,19 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = ArticleResource::collection(Article::orderBy('created_at', 'desc')->get());
+        $articles = Article::orderBy('created_at', 'desc')->paginate(1);
+        
+        $articlesResource = ArticleResource::collection($articles);
 
-        return response()->json($articles);
+        $paginationData = [
+            'prev_page_url' => $articles->previousPageUrl(),
+            'next_page_url' => $articles->nextPageUrl(),
+            'current_page' => $articles->currentPage(),
+        ];
+
+        $data = collect($paginationData)->merge(['articles' => $articlesResource]);
+
+        return response()->json($data);
     }
 
     /**

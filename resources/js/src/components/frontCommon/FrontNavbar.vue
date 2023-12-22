@@ -59,7 +59,7 @@ export default {
     },
 
     async checkUserRole() {
-      if (this.$store.user) {
+      if (this.$store.state.user) {
         axios
           .get("/api/user-roles")
           .then((resp) => (this.isAdmin = resp.data.includes("admin")))

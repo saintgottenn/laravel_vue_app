@@ -32,6 +32,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user-roles', [UserRoleController::class, 'getRoles']);
 
-    Route::apiResource('articles', ArticleController::class)->except(['index', 'show']);
+    Route::apiResource('articles', ArticleController::class);
     Route::apiResource('comments', CommentController::class);
 });

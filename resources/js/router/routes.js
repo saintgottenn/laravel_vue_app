@@ -12,7 +12,6 @@ import AdminLayout from "../src/admin/adminCommon/AdminLayout.vue";
 
 import { guestGuard } from "./guestGuard";
 import { adminGuard } from "./adminGuard";
-import { authGuard } from "./authGuard";
 
 const routes = [
   {
@@ -20,7 +19,11 @@ const routes = [
     component: FrontLayout,
     meta: { currentRoutes: "front" },
     children: [
-      { path: "", component: Home, name: "home" },
+      {
+        path: "",
+        component: Home,
+        name: "home",
+      },
       {
         path: "/articles",
         name: "articles",
