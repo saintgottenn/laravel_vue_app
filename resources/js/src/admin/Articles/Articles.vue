@@ -42,7 +42,7 @@
                   name: 'articles.show',
                   params: { articleId: article.id },
                 }"
-                class="mt-2 flex items-center text-white underline text-blue-500"
+                class="mt-2 flex items-center underline text-blue-500"
               >
                 Перейти
               </router-link>
