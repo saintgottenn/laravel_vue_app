@@ -20,8 +20,18 @@
 
 Шаги для установки и настройки проекта:
 
-1. Клонируйте репозиторий
+```bash
+  git clone https://github.com/saintgottenn/laravel_vue_app
+  cd laravel_vue_app
+  
+  npm install
+  composer install
+```
 
-   ```bash
-   git clone https://example.com/your-project.git
-   cd your-project
+
+Подключите бд(MySQL)
+
+```bash
+  php arisan migrate
+  php artisan db:seed
+```
