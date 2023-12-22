@@ -17,7 +17,7 @@
 
 ```bash
   php arisan migrate
-  php artisan db:seed
+  php artisan db:seed --class="RoleSeeder"
 ```
 Замените поля в .env
 
