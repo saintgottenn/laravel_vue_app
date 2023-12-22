@@ -1,7 +1,9 @@
 <template>
   <div class="admin">
     <AdminNavbar />
-    <router-view></router-view>
+    <div class="px-3">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
