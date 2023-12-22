@@ -19,3 +19,12 @@
   php arisan migrate
   php artisan db:seed
 ```
+Замените поля в .env
+
+```env
+  DB_HOST=your_host 
+  DB_PORT=your_port
+  DB_DATABASE=your_db
+  DB_USERNAME=your_username
+  DB_PASSWORD=your_password
+```
