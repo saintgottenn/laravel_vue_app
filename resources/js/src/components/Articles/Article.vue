@@ -69,52 +69,38 @@
 </template>
 
 <script>
+import Navbar from "../../common/Navbar.vue";
 export default {
-  name: "Article",
-  props: ["articleId"],
+  components: {
+    Navbar,
+  },
   data() {
     return {
-      content: "",
-      title: "",
-      image: "",
-      date: "",
-      comments: [],
-      newComment: "",
-      commentableType: "",
+      isAdmin: false,
     };
   },
-  mounted() {
-    this.getArticle(this.articleId);
+  watch: {
+    "$store.state.authToken": {
+      immediate: true,
+      handler(token) {
+        this.checkUserRole();
+      },
+    },
   },
   methods: {
-    getArticle(articleId) {
-      axios
-        .get(`/api/articles/${articleId}`)
-        .then((resp) => {
-          this.content = resp.data.content;
-          this.title = resp.data.title;
-          this.image = resp.data.image;
-          this.date = resp.data.created_at;
-          this.comments = resp.data.comments || [];
-          this.commentableType = resp.data.commentable_type;
-        })
-        .catch((error) => console.error(error));
+    logout() {
+      this.$store.dispatch("logout", { router: this.$router });
     },
 
-    submitComment() {
-      axios
-        .post("/api/comments/", {
-          content: this.newComment,
-          commentable_type: this.commentableType,
-          commentable_id: this.articleId,
-        })
-        .then((resp) => {
-          console.log(resp);
-          this.comments.unshift(resp.data.comment);
-
-          this.newComment = "";
-        })
-        .catch((error) => console.error(error));
+    async checkUserRole() {
+      if (this.$store.state.authToken) {
+        axios
+          .get("/api/user-roles")
+          .then((resp) => (this.isAdmin = resp.data.includes("admin")))
+          .catch((error) => console.error(error));
+      } else {
+        this.isAdmin = false;
+      }
     },
   },
   computed: {
